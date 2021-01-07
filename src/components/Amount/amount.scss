@@ -1,0 +1,17 @@
+@import 'src/styles/_vars.scss';
+
+.amount {
+  background-color: $color-light;
+  padding: (3*$gutter + rem);
+  text-align: center;
+
+  .amount-value {
+    font-size: 2em;
+    font-weight: 700;
+  }
+
+  .amount-currency {
+    font-size: 1.3em;
+    margin-top: ($gutter + rem);
+  }
+}

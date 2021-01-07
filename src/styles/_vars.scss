@@ -1,0 +1,15 @@
+//je définis une variable qui représente la couleurs principal de l'application
+// comme ça, si le client veut changer la couleur, je modifie à un seul endroit
+
+
+$color: #bb5432;
+$color-alt:#f1c5b6;
+$color-light: #fff;
+
+$font: 'Spartan', sans-serif;
+
+$transition-fast: 0.2s;
+$transition-slow: 1s;
+
+// unité: rem
+$gutter: 0.8;

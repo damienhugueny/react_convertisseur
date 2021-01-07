@@ -1,0 +1,17 @@
+@import 'src/styles/_vars.scss';
+
+.header {
+  background-color: $color;
+  color: $color-light;
+  text-align: center;
+  padding: ($gutter + rem);
+
+  .header-title {
+    font-size: 2em;
+    font-weight: 700;
+  }
+  .header-amount {
+    margin-top: ($gutter + rem)
+  }
+
+}

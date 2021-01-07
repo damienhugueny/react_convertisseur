@@ -1,0 +1,29 @@
+@import 'src/styles/_vars.scss';
+
+.currencies {
+  background-color: $color-light;
+  text-align: left;
+
+  .currencies-title {
+    padding: ($gutter + rem);
+    margin-top: ($gutter + rem);
+    font-weight: bold;
+  }
+
+  .currency {
+    padding: ($gutter + rem);
+    border-top: 1px solid $color-alt;
+    font-weight: 500;
+    cursor: pointer;
+    //background-color: $color-light;
+
+    // quand la propriété css indiquée change de valeur, la nouvelle valeur est
+    // prise en compte progressivement
+    transition: background-color $transition-slow;
+
+    &:hover {
+      background-color: $color-alt;
+    }
+  }
+
+}
