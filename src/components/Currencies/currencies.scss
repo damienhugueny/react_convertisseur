@@ -6,8 +6,13 @@
 
   .currencies-title {
     padding: ($gutter + rem);
-    margin-top: ($gutter + rem);
     font-weight: bold;
+  }
+
+  .currencies-list {
+    max-height:  350px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
   }
 
   .currency {
