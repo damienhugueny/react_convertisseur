@@ -5,6 +5,7 @@ import React from 'react';
 import Header from '../Header/Header';
 import Currencies from '../Currencies/Currencies';
 import Amount from '../Amount/Amount';
+import CustomButton from '../CustomButton/CustomButton';
 
 import currenciesList from '../../data/currencies';
 
@@ -37,7 +38,12 @@ class App extends React.Component {
   // !!! grâce au plugin babel "@babel/plugin-proposal-class-properties"
   // je peux définir un state sans avoir besoin d'écrire un constructeur
   state = {
-      open : false,
+      // whether the currencies block is open
+      open : true,
+      // amount in source currency (displayed in the header)
+      baseAmount : 1,
+      // target currency
+      currency : 'United States Dollar',
   };
 
   // !!! grâce au plugin babel "@babel/plugin-proposal-class-properties"
@@ -54,12 +60,39 @@ class App extends React.Component {
     });
     // dès que le State (ou les props) change, React refait le rendu du composant
     // rendu du composant +> rappelle la méthode render
+    // rendu de chacun des composants (Header, CustomButton...),mais si pour un
+    // composant le rendu ne change rien, alors le DOM réel ne sera pas modifié
+  };
+
+  // calcule du montant (conversion du montant de base vers la devise cible)
+  computeAmount = () => {
+    // TODO faire le calcul
+
+    // récupérer les informations nécessaire dans le state
+    const { baseAmount, currency } = this.state;
+
+    // récupérer le taux de change dans currencies
+    // find retourne le premier élément du tableau qui correspond à la condition,
+    // donc ici il retourne un objet
+    const foundCurrency = currenciesList.find((MachinBidule) => MachinBidule.name === currency)
+    console.log(foundCurrency);
+    // multiplier baseAmount par le taux de change
+    // desctructuring - const rate = foundCurrency.rate
+    const { rate } = foundCurrency;
+    const result = baseAmount * rate;
+
+    // on arrondit en ne gardant que deux décimales;
+    return Number(result.toFixed(2));
+  };
+
+  setCurrency = () => {
+    console.log('changement');
   };
 
   render() {
     // strictement équivalent à :
     // const open = this.state.open
-    const{ open } = this.state;
+    const{ open, baseAmount, currency } = this.state;
 
     // Js sait que pour que la condition totale soit vraie, les deux
     // sous-conditions doivent être vraies. Donc si la premièrer est fausse,
@@ -77,13 +110,15 @@ class App extends React.Component {
     //   </div>
     // )}
 
+    const resultAmount = this.computeAmount();
+
     return (
       <div className="converter">
 
-        <Header />
-        <button type="button" onClick={this.handleClick}>Open</button>
-        {open &&<Currencies currencies={currenciesList}/>}
-        <Amount />
+        <Header amount={baseAmount}/>
+        <CustomButton open={open}  manageClick={this.handleClick} />
+        {open &&<Currencies currencies={currenciesList} setCurrency={this.setCurrency} />}
+        <Amount currency={currency} amount={resultAmount}/>
 
       </div>
 

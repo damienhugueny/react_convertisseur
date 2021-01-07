@@ -1,12 +1,22 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import './amount.scss'
 
-const Amount = () => (
+// composant de présentation : n'a pas d'intelligence, se content d'afficher
+// quelque chose en fonction des props qu'il reçoit (on place l'intelligence dans
+// le composant de plus haut niveau)
+const Amount = ({ currency, amount }) => (
   <div className="amount">
-    <p className="amount-value">1.09</p>
-    <p className="amount-currency">United States Dollar</p>
+    <p className="amount-value">{amount}</p>
+    <p className="amount-currency">{currency}</p>
   </div>
 );
+
+Amount.propTypes = {
+  currency: PropTypes.string.isRequired,
+  amount: PropTypes.number.isRequired,
+};
 
 export default Amount;

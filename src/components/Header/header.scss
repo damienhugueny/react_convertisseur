@@ -4,7 +4,8 @@
   background-color: $color;
   color: $color-light;
   text-align: center;
-  padding: ($gutter + rem);
+  padding: (3*$gutter + rem);
+
 
   .header-title {
     font-size: 2em;
