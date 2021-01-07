@@ -86,7 +86,7 @@ class App extends React.Component {
   };
 
   setCurrency = () => {
-    console.log('changement');
+    console.log('changement de devise');
   };
 
   render() {
@@ -117,7 +117,7 @@ class App extends React.Component {
 
         <Header amount={baseAmount}/>
         <CustomButton open={open}  manageClick={this.handleClick} />
-        {open &&<Currencies currencies={currenciesList} setCurrency={this.setCurrency} />}
+        {open &&<Currencies currencies={currenciesList} setCurrency={this.setCurrency}/>}
         <Amount currency={currency} amount={resultAmount}/>
 
       </div>

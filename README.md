@@ -42,3 +42,7 @@ Réaliser ce projet
 - https://fr.reactjs.org/docs/introducing-jsx.html#embedding-expressions-in-jsx
 - https://developer.mozilla.org/fr/docs/Web/CSS/overflow
 - https://developer.mozilla.org/fr/docs/Web/CSS/transition
+
+
+video
+51:52
