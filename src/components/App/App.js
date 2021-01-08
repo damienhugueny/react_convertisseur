@@ -19,6 +19,13 @@ import './app.scss'
 
 // composant sous forme de class : render retourne le JSX
 
+// Objectif : pouvoir filtrer les devises en fonction d'un champ
+// x ajouter un input
+// x stocker dans le state
+// x appeller setState => nouveau rendu automatique
+// - array.filter
+
+
 // == Composant
 class App extends React.Component {
   // constructeur : on passe props en paramètre, même si on n'en a pas
@@ -43,7 +50,9 @@ class App extends React.Component {
       // amount in source currency (displayed in the header)
       baseAmount : 1,
       // target currency
-      currency : 'United States Dollar',
+      currency : currenciesList[30].name,
+      // value for the input filter for currencies
+      search: '',
   };
 
   // !!! grâce au plugin babel "@babel/plugin-proposal-class-properties"
@@ -53,6 +62,7 @@ class App extends React.Component {
     // console.log("click");
     // changer quelque chose dans le state : envoi de la nouvelle valeur avec setState
     // on fournit un objet qui décrit les changements à appliquer au state
+    // (je n'indique pas les propriétés qui gardent la même valeur)
     this.setState({
       // on inverse la valeur de open avec "!"
       //
@@ -86,16 +96,44 @@ class App extends React.Component {
   };
 
   setCurrency = (name) => {
-    
-    console.log(`changement de devise :  ${name}`);
 
+    //console.log(`changement de devise :  ${name}`);
+
+    this.setState({
+      currency : name,
+    });
+
+    // !!! INTERDIT de modifier directement le state, il faut utiliser setState, sinon
+    // !!! React ne détecte pas qu'il faut refaire le rendu
+    // !!! => this.state.currency = name; (NO)
 
   };
+
+  setSearch = (newValue) => {
+    this.setState({
+      search : newValue,
+    });
+
+  };
+
+  /*
+  input est un champ contolé : quand on saisi un caractère, au lieu de stocker la
+  nouvelle valeur dans le DOM, il informe son parent que la valeur a changer => mise
+  à jour du state, nouveau rendu, et donc la valeur est mise à jour dans le DOM.
+  Pour cela on ajoute une information dans le state, et on a deux props :
+  - une qui permet de récupérer la valeur stockée dans state (search)
+  - une qui permet de déclencher une mise à jour de la valeur stocké dans le state
+  (setSearch)
+  */
 
   render() {
     // strictement équivalent à :
     // const open = this.state.open
-    const{ open, baseAmount, currency } = this.state;
+    const{ open,
+           baseAmount, 
+           currency, 
+           search, 
+           setSearch } = this.state;
 
     // Js sait que pour que la condition totale soit vraie, les deux
     // sous-conditions doivent être vraies. Donc si la premièrer est fausse,
@@ -120,7 +158,14 @@ class App extends React.Component {
 
         <Header amount={baseAmount}/>
         <CustomButton open={open}  manageClick={this.handleClick} />
-        {open &&<Currencies currencies={currenciesList} setCurrency={this.setCurrency}/>}
+        {open &&(
+          <Currencies 
+            currencies={currenciesList} 
+            setCurrency={this.setCurrency}
+            search={search}
+            setSearch={this.setSearch}
+          />
+          )}
         <Amount currency={currency} amount={resultAmount}/>
 
       </div>

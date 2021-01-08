@@ -4,6 +4,13 @@
   background-color: $color-light;
   text-align: left;
 
+  .currencies-search{
+    width: 91.5%;
+    padding: ($gutter + rem);
+    color: $color;
+    font: inherit;
+  }
+
   .currencies-title {
     padding: ($gutter + rem);
     font-weight: bold;

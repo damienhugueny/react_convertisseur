@@ -4,9 +4,12 @@ import React from 'react';
 // librairie pour valider les type de chaques props;
 import PropTypes from 'prop-types';
 
+import Currency from './Currency'
+
 import './currencies.scss'
 
-const Currencies = ({ currencies, setCurrency  }) => {
+// responsabilité : creer le bloc des devises, boucler sur les devises
+const Currencies = ({ currencies, setCurrency, search, setSearch }) => {
 
   // utiliser la valeur de l'élément dans map => meilleur façon
   // s'appuie sur les données plutôt que sur le DOM
@@ -23,16 +26,20 @@ const Currencies = ({ currencies, setCurrency  }) => {
 
   return (
     <main className="currencies">
-      <h2 className="currencies-title">Currencies</h2>
+      <input
+        className="currencies-search"
+        type="text"
+        placeholder="recherche"
+        value={search}
+        onChange={ (event) => setSearch(event.target.value)}
+      />
       <ul className="currencies-list">
         {currencies.map((currency) => (
-          <li
-           key={currency.name}
-           className="currency"
-           onClick={() => {
-             handleClick(currency.name)
-           }}
-          >{currency.name}</li>
+          <Currency  
+            key={currency.name} 
+            name={currency.name} 
+            setCurrency={setCurrency}
+          />
         ))}
       </ul>
     </main>
@@ -46,10 +53,11 @@ Currencies.propTypes = {
   currencies: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      rate: PropTypes.number.isRequired,
     }).isRequired,
   ).isRequired,
   setCurrency: PropTypes.func.isRequired,
+  search: PropTypes.string.isRequired,
+  setSearch: PropTypes.func.isRequired,
 };
 
 export default Currencies;
