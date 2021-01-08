@@ -6,6 +6,19 @@
   text-align: center;
   padding: (3*$gutter + rem);
 
+  .input-amount{
+    width: 50px;
+    height: 15px;
+    margin-top: 20px;
+    text-align: center;
+    padding: ($gutter + rem);
+    border: none;
+    border-bottom: 2px solid white;
+    background-color: $color;
+    color: white;
+    font: inherit;
+    font-weight: bold;
+  }
 
   .header-title {
     font-size: 2em;

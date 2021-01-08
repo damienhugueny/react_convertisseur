@@ -16,6 +16,7 @@ import './app.scss'
 // - utiliser le hook useState
 
 // un composant React c'est une fonction... sauf si on a besoin d'utiliser un state
+// ou si on a besoin d'utiliser le cycle de vie
 
 // composant sous forme de class : render retourne le JSX
 
@@ -23,7 +24,7 @@ import './app.scss'
 // x ajouter un input
 // x stocker dans le state
 // x appeller setState => nouveau rendu automatique
-// - array.filter
+// x array.filter
 
 
 // == Composant
@@ -32,6 +33,13 @@ import './app.scss'
 //! se contentent d'afficher
 
 class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    console.log('--- Constructor ---')
+  }
+
   // constructeur : on passe props en paramètre, même si on n'en a pas
   //constructor(props) {
     // on appelle le constructeur de React.Component
@@ -58,6 +66,40 @@ class App extends React.Component {
       // value for the input filter for currencies
       search: '',
   };
+
+  // fonction de cycle de vie de React
+  componentDidMount() {
+    // Endroit ou on met l'appel à une API
+    console.log('--- componentDidMount ---');
+    this.setPageTitle();
+  }
+
+  // version simple on met à jour le titre à chaque changementy du state
+  /*
+  componentDidUpdate() {
+    console.log('--- ComponentDidUpdate ---');
+    // changer le titre de ma page
+    this.setPageTitle();
+  }
+  */
+
+  // version avancée : comparer avec le state précédent
+  componentDidUpdate(prevProps, prevState) {
+    console.log('--- ComponentDidUpdate ---');
+    console.log(`avant currency valait ${prevState.currency}, maintenant c'est ${this.state.currency}`);
+
+    // on peut faire une action seulement dans certain cas
+    if (prevState.currency !== this.state.currency){
+      this.setPageTitle();
+      console.log('mise à jour du titre');
+    }
+    
+  }
+
+  // factoriser pour faciliter les changements futurs
+  setPageTitle() {
+    document.title = `Euro to ${this.state.currency} `;
+  }
 
   // !!! grâce au plugin babel "@babel/plugin-proposal-class-properties"
   // au lieu de définir une méthode, je définis une propriété
@@ -145,6 +187,13 @@ class App extends React.Component {
     return filteredCurrencies;
   };
 
+  handleAmountChange = (amount) => {
+    console.log(amount);
+    this.setState({
+      baseAmount : Number(amount),
+    });
+  }
+
   /*
   input est un champ contolé : quand on saisi un caractère, au lieu de stocker la
   nouvelle valeur dans le DOM, il informe son parent que la valeur a changer => mise
@@ -156,6 +205,9 @@ class App extends React.Component {
   */
 
   render() {
+
+    console.log('--- Render ---')
+
     // strictement équivalent à :
     // const open = this.state.open
     const{ open,
@@ -186,7 +238,7 @@ class App extends React.Component {
     return (
       <div className="converter">
 
-        <Header amount={baseAmount}/>
+        <Header amount={baseAmount} setAmount={this.handleAmountChange}/>
         <CustomButton open={open}  manageClick={this.handleClick} />
         {open &&(
           <Currencies 

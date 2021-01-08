@@ -3,15 +3,22 @@ import PropTypes from 'prop-types';
 
 import './header.scss'
 
-const Header = ({ amount }) => (
+const Header = ({ amount, setAmount }) => (
   <header className="header">
     <h1 className="header-title">Converter</h1>
-    <p className="header-amount">{amount} euro</p>
+    <input 
+      type="text"
+      className="input-amount"
+      laceholder="Montant"
+      value={amount}
+      onChange={ (event) => setAmount(event.target.value)}
+    /> Euro
   </header>
 );
 
 Header.propTypes = {
   amount: PropTypes.number.isRequired,
+  setAmount: PropTypes.func.isRequired,
 };
 
 export default Header;

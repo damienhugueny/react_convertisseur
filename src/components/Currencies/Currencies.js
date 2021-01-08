@@ -9,46 +9,43 @@ import Currency from './Currency'
 import './currencies.scss'
 
 // responsabilité : creer le bloc des devises, boucler sur les devises
-const Currencies = ({ currencies,
-                      setCurrency,
-                      search,
-                      setSearch, }) => {
 
-  // utiliser la valeur de l'élément dans map => meilleur façon
-  // s'appuie sur les données plutôt que sur le DOM
-  const handleClick = (name) => {
-    // je veux fournir en argument la devise qui a reçu le clic
-    // première façon : m'appuyer sur l'élément du DOM => ça fonctionne , mais on
-    // n'aurait pas mieux ?
-    setCurrency(name);
+class Currencies extends React.Component {
+  componentDidMount() {
+    console.log('--- Currencies - willMount ---')
+  }
 
-    // event.target.textContent
-    // event.target.innerText
+  render () {
 
-  };
+    const {
+      currencies,
+      setCurrency,
+      search,
+      setSearch,
+    } = this.props;
 
-  return (
-    <main className="currencies">
-      <input
-        className="currencies-search"
-        type="text"
-        placeholder="recherche"
-        value={search}
-        onChange={ (event) => setSearch(event.target.value)}
-      />
-      <ul className="currencies-list">
-        {currencies.map((currency) => (
-          <Currency  
-            key={currency.name} 
-            name={currency.name} 
-            setCurrency={setCurrency}
-          />
-        ))}
-      </ul>
-    </main>
-  );
-
-};
+    return (
+      <main className="currencies">
+        <input
+          className="currencies-search"
+          type="text"
+          placeholder="recherche"
+          value={search}
+          onChange={ (event) => setSearch(event.target.value)}
+        />
+        <ul className="currencies-list">
+          {currencies.map((currency) => (
+            <Currency  
+              key={currency.name} 
+              name={currency.name} 
+              setCurrency={setCurrency}
+            />
+          ))}
+        </ul>
+      </main>
+    );
+  }
+}
 
 Currencies.propTypes = {
   // Ok, mais on peut faire plus précis
