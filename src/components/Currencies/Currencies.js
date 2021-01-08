@@ -32,7 +32,7 @@ const Currencies = ({ currencies, setCurrency  }) => {
            onClick={() => {
              handleClick(currency.name)
            }}
-          >{currency.name} </li>
+          >{currency.name}</li>
         ))}
       </ul>
     </main>

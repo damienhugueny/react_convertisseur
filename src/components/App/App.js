@@ -85,8 +85,11 @@ class App extends React.Component {
     return Number(result.toFixed(2));
   };
 
-  setCurrency = () => {
-    console.log('changement de devise');
+  setCurrency = (name) => {
+    
+    console.log(`changement de devise :  ${name}`);
+
+
   };
 
   render() {
