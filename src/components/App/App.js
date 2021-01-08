@@ -27,6 +27,10 @@ import './app.scss'
 
 
 // == Composant
+//! container component, le seul de l'application => gère les données (state) et
+//! fournir les données au autres composants (presentational/dumb components), qui
+//! se contentent d'afficher
+
 class App extends React.Component {
   // constructeur : on passe props en paramètre, même si on n'en a pas
   //constructor(props) {
@@ -116,6 +120,31 @@ class App extends React.Component {
 
   };
 
+  getCurrencies = () => {
+    
+    const { search } = this.state;
+
+    let filteredCurrencies;
+    // trim() retire les espaces
+    if (search.trim().length === 0) {
+      filteredCurrencies = currenciesList;
+    }
+    else{
+      // on prépare search (variable intermédiaire pour pas refaire à chaque boucle)
+      // enlève les espace et transforme en minuscule
+      const searchOptimized = search.trim().toLowerCase();
+
+      // filtrer la liste des devises en fonction de search
+      filteredCurrencies = currenciesList.filter((currency) => {
+        // je retourne vrai si je veux conserver l'élément, faux sinon
+        return currency.name.toLowerCase().includes(searchOptimized);
+      });
+    }
+
+    // retourner la liste (ou la stocker dans le state)
+    return filteredCurrencies;
+  };
+
   /*
   input est un champ contolé : quand on saisi un caractère, au lieu de stocker la
   nouvelle valeur dans le DOM, il informe son parent que la valeur a changer => mise
@@ -152,6 +181,7 @@ class App extends React.Component {
     // )}
 
     const resultAmount = this.computeAmount();
+    const filterCurrencies = this.getCurrencies();
 
     return (
       <div className="converter">
@@ -160,7 +190,7 @@ class App extends React.Component {
         <CustomButton open={open}  manageClick={this.handleClick} />
         {open &&(
           <Currencies 
-            currencies={currenciesList} 
+            currencies={filterCurrencies} 
             setCurrency={this.setCurrency}
             search={search}
             setSearch={this.setSearch}

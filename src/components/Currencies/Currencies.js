@@ -9,7 +9,10 @@ import Currency from './Currency'
 import './currencies.scss'
 
 // responsabilité : creer le bloc des devises, boucler sur les devises
-const Currencies = ({ currencies, setCurrency, search, setSearch }) => {
+const Currencies = ({ currencies,
+                      setCurrency,
+                      search,
+                      setSearch, }) => {
 
   // utiliser la valeur de l'élément dans map => meilleur façon
   // s'appuie sur les données plutôt que sur le DOM
